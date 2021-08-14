@@ -1,0 +1,24 @@
+body {
+  --bg-color: white;
+  --font-color: black;
+}
+
+body.dark-theme {
+  --bg-color: black;
+  --font-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --bg-color: black;
+    --font-color: white;
+  }
+  body.light-theme {
+    --bg-color: white;
+    --font-color: black;
+  }
+}
+
+body {
+  background-color: var(--bg-color);
+}
