@@ -28,6 +28,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "ress": "^4.0.0",
     "sirv-cli": "^1.0.0",
-    "svelte-awesome": "^2.3.2"
+    "svelte-awesome": "^2.3.2",
+    "typesafe-i18n": "^2.36.0"
   }
 }
