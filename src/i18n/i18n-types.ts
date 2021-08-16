@@ -11,16 +11,32 @@ export type Locales =
 
 export type Translation = {
 	/**
+	 * Settings
+	 */
+	'modalTitleSettings': string
+	/**
 	 * Theme selector
 	 */
 	'themeSelector': string
+	/**
+	 * Language selector
+	 */
+	'languageSelector': string
 }
 
 export type TranslationFunctions = {
 	/**
+	 * Settings
+	 */
+	'modalTitleSettings': () => LocalizedString
+	/**
 	 * Theme selector
 	 */
 	'themeSelector': () => LocalizedString
+	/**
+	 * Language selector
+	 */
+	'languageSelector': () => LocalizedString
 }
 
 export type Formatters = {}

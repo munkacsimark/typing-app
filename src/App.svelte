@@ -1,53 +1,42 @@
 <script lang="ts">
-	import LL, { initI18n, setLocale } from "./i18n/i18n-svelte";
-	import type { Locales } from "./i18n/i18n-types";
+	import { initI18n } from "./i18n/i18n-svelte";
 	import Theme from "./Theme";
-	import Icon from "svelte-awesome";
-	import { faFlag, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 	import { setTheme, saveTheme, getTheme } from "./helpers/themeHandler";
+	import Header from "./components/Header.svelte";
+	import Modal from "./components/Modal.svelte";
+	import { openedModal, isDarkTheme } from "./stores";
 
 	initI18n("en");
-	const prefersDarkScheme = window.matchMedia(
-		"(prefers-color-scheme: dark)"
+
+	// initial setting of theme
+	const DARK_SCHEME_MEDIA_MATCH_STRING = "(prefers-color-scheme: dark)";
+	const prefersDarkScheme: boolean = window.matchMedia(
+		DARK_SCHEME_MEDIA_MATCH_STRING
 	).matches;
-	const savedTheme = getTheme(); // undefined means theme wasn't set already
+	const savedTheme: Theme = getTheme(); // undefined means theme wasn't set already
 	if (savedTheme === null) {
 		saveTheme(prefersDarkScheme ? Theme.dark : Theme.light);
 	}
-	const isDarkTheme =
+	const calculatedTheme: Theme =
 		savedTheme === null || savedTheme === undefined
 			? prefersDarkScheme
-			: savedTheme === Theme.dark;
-	setTheme(isDarkTheme ? Theme.dark : Theme.light);
+				? Theme.dark
+				: Theme.light
+			: savedTheme;
+	setTheme(calculatedTheme);
+	$isDarkTheme = calculatedTheme === Theme.dark;
 
-	const handleThemeChange = (event: Event) => {
-		const newTheme = (event.target as HTMLInputElement).checked
-			? Theme.dark
-			: Theme.light;
-		setTheme(newTheme);
-		saveTheme(newTheme);
-	};
-
-	const handleLanguageChange = (event: Event) => {
-		setLocale((event.target as HTMLSelectElement).value as Locales);
-	};
+	// Modal handling
+	let isModalOpen: boolean = false;
+	openedModal.subscribe((modal) => {
+		isModalOpen = modal !== null;
+		document.body.classList[modal === null ? "remove" : "add"]("no-scroll");
+	});
 </script>
 
 <main>
-	<span>{$LL.themeSelector()}</span>
-	<Icon data="{faLightbulb}" />
-	<input
-		type="checkbox"
-		on:change="{handleThemeChange}"
-		checked="{isDarkTheme}"
-	/>
-	<hr />
-	<Icon data="{faFlag}" />
-	<select on:change="{handleLanguageChange}">
-		<option value="en">English</option>
-		<option value="hu">Magyar</option>
-	</select>
+	<Header />
 </main>
-
-<style>
-</style>
+{#if isModalOpen}
+	<Modal />
+{/if}

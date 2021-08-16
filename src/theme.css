@@ -1,24 +1,47 @@
 body {
-  --bg-color: white;
-  --font-color: black;
+	--base-bg-color: #ddd;
+	--base-font-color: #222;
+	--base-hover-bg-color: #0002;
+	--modal-bg-color: #ccc;
+	--border-color: #aaa;
+	--input-bg-color: #eee;
+	--switch-thumb-color: #bbb;
+	--thumb-border-color: #9c9c9c;
+
+	/* static styles */
+	--fader-color: #0008;
 }
 
 body.dark-theme {
-  --bg-color: black;
-  --font-color: white;
+	--base-bg-color: #222;
+	--base-font-color: #ddd;
+	--base-hover-bg-color: #fff3;
+	--modal-bg-color: #444;
+	--border-color: #353535;
+	--input-bg-color: #bbb;
+	--switch-thumb-color: #999;
+	--thumb-border-color: #858585;
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
-    --bg-color: black;
-    --font-color: white;
-  }
-  body.light-theme {
-    --bg-color: white;
-    --font-color: black;
-  }
-}
-
-body {
-  background-color: var(--bg-color);
+	body {
+		--base-bg-color: #222;
+		--base-font-color: #ddd;
+		--base-hover-bg-color: #fff3;
+		--modal-bg-color: #444;
+		--border-color: #353535;
+		--input-bg-color: #bbb;
+		--switch-thumb-color: #999;
+		--thumb-border-color: #858585;
+	}
+	body.light-theme {
+		--base-bg-color: #ddd;
+		--base-font-color: #222;
+		--base-hover-bg-color: #0002;
+		--modal-bg-color: #ccc;
+		--border-color: #aaa;
+		--input-bg-color: #eee;
+		--switch-thumb-color: #bbb;
+		--thumb-border-color: #9c9c9c;
+	}
 }
