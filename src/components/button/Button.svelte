@@ -2,6 +2,7 @@
 	import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
 	import Icon from "svelte-awesome";
 	import ButtonAppearance from "./ButtonAppearance";
+
 	export let iconData: IconDefinition;
 	export let text: string | null = null;
 	export let appearance = ButtonAppearance.normal;
@@ -11,14 +12,6 @@
 		switch (appearance) {
 			case ButtonAppearance.normal:
 				return ` normal${!text && " icon-only"}`;
-		}
-	};
-
-	const getStyleString = (): string => {
-		// ultimate hack because class attribute isn't working on Icon component
-		switch (appearance) {
-			case ButtonAppearance.normal:
-				return "width: 24; heigth: 24;";
 		}
 	};
 
@@ -35,17 +28,18 @@
 		<slot />
 	{/if}
 	{#if iconData}
-		<Icon data="{iconData}" scale="{getScale()}" style="{getStyleString()}" />
+		<Icon data="{iconData}" scale="{getScale()}" />
 	{/if}
 </button>
 
 <style>
 	.button {
+		--padding: 10px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		margin: 0;
-		padding: 10px;
+		padding: var(--padding);
 		background-color: transparent;
 		transition: 0.2s;
 	}
@@ -57,5 +51,7 @@
 	}
 	.normal.icon-only {
 		border-radius: 50%;
+		width: calc(24px + var(--padding) * 2);
+		height: calc(24px + var(--padding) * 2);
 	}
 </style>

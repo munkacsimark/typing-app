@@ -4,7 +4,8 @@
 	import { setTheme, saveTheme, getTheme } from "./helpers/themeHandler";
 	import Header from "./components/Header.svelte";
 	import Modal from "./components/Modal.svelte";
-	import { openedModal, isDarkTheme } from "./stores";
+	import { openedModal, isDarkTheme, isTimerRunning } from "./stores";
+	import Timer from "./components/Timer.svelte";
 
 	initI18n("en");
 
@@ -36,6 +37,9 @@
 
 <main>
 	<Header />
+	<Timer />
+	<button on:click="{() => ($isTimerRunning = true)}">DUMMY START</button>
+	<button on:click="{() => ($isTimerRunning = false)}">DUMMY STOP</button>
 </main>
 {#if isModalOpen}
 	<Modal />

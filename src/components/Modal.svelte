@@ -3,15 +3,16 @@
 	import Button from "./button/Button.svelte";
 	import { openedModal } from "../stores";
 	import LL from "../i18n/i18n-svelte";
+	import { scale, fade } from "svelte/transition";
 
 	const closeModal = (): void => ($openedModal = null);
 </script>
 
 <div class="modal-holder">
-	<div class="fader" on:click="{closeModal}"></div>
-	<div class="modal">
+	<div class="fader" on:click="{closeModal}" transition:fade></div>
+	<div class="modal" transition:scale>
 		<header class="modal-header">
-			{$LL[$openedModal.translationFunctionName]()}
+			{$openedModal ? $LL[$openedModal.translationFunctionName]() : ""}
 			<Button iconData="{faTimes}" onClick="{closeModal}" />
 		</header>
 		<div class="modal-content">
