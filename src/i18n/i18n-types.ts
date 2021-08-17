@@ -22,6 +22,10 @@ export type Translation = {
 	 * Language selector
 	 */
 	'languageSelector': string
+	/**
+	 * Start typing here
+	 */
+	'wordInputPlaceholder': string
 }
 
 export type TranslationFunctions = {
@@ -37,6 +41,10 @@ export type TranslationFunctions = {
 	 * Language selector
 	 */
 	'languageSelector': () => LocalizedString
+	/**
+	 * Start typing here
+	 */
+	'wordInputPlaceholder': () => LocalizedString
 }
 
 export type Formatters = {}

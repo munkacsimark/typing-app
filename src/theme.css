@@ -7,6 +7,7 @@ body {
 	--input-bg-color: #d3d3d3;
 	--switch-thumb-color: #acacac;
 	--thumb-border-color: #9c9c9c;
+	--typer-input-bg-color: #ddd;
 
 	/* static styles */
 	--fader-color: #0008;
@@ -21,6 +22,7 @@ body.dark-theme {
 	--input-bg-color: #bbb;
 	--switch-thumb-color: #999;
 	--thumb-border-color: #858585;
+	--typer-input-bg-color: #303030;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,6 +35,7 @@ body.dark-theme {
 		--input-bg-color: #bbb;
 		--switch-thumb-color: #999;
 		--thumb-border-color: #858585;
+		--typer-input-bg-color: #303030;
 	}
 	body.light-theme {
 		--base-bg-color: #ddd;
@@ -43,5 +46,6 @@ body.dark-theme {
 		--input-bg-color: #d3d3d3;
 		--switch-thumb-color: #acacac;
 		--thumb-border-color: #9c9c9c;
+		--typer-input-bg-color: #ddd;
 	}
 }

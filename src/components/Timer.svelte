@@ -16,7 +16,12 @@
 	} from "../helpers/timeCalculations";
 	import type TimeData from "../TimeData";
 	import Button from "./button/Button.svelte";
-	import { isTimerDone, isTimerRunning, remainingTime } from "../stores";
+	import {
+		currentLocale,
+		isTimerDone,
+		isTimerRunning,
+		remainingTime,
+	} from "../stores";
 	import { scale, fade } from "svelte/transition";
 
 	const MIN_TIME = 5 * secondInTimestamp;
@@ -62,6 +67,8 @@
 			clearInterval(timerInterval);
 		}
 	});
+
+	currentLocale.subscribe((_) => resetTime());
 </script>
 
 <div class="timer-holder">
