@@ -17,6 +17,7 @@
 	import Timer from "./components/Timer.svelte";
 	import Typer from "./components/Typer.svelte";
 	import SettingsModal from "./components/modals/SettingsModal.svelte";
+	import Results from "./components/Results.svelte";
 
 	initI18n("en");
 	locale.subscribe((newLocale) => {
@@ -69,16 +70,12 @@
 		if (!isRunning) return;
 		$remainingTime = $baseTime;
 		$correctCharacters = 0;
-		$incorrectWords = [];
+		$incorrectWords = 0;
 	});
 
-	// handle timer done
-	isTimerDone.subscribe((isDone) => {
-		if (!isDone) return;
-		console.log("TIMER DONE");
-		console.log($correctCharacters);
-		console.log($incorrectWords);
-	});
+	// handle showing results
+	let showResults: boolean = false;
+	isTimerDone.subscribe((isDone) => (showResults = isDone));
 </script>
 
 <main>
@@ -89,6 +86,7 @@
 	/>
 	<Timer />
 	<Typer />
+	<Results />
 </main>
 <Modal
 	isOpen="{isModalOpen}"

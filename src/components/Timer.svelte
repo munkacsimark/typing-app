@@ -86,7 +86,9 @@
 				<Button iconData="{faMinus}" onClick="{subtractTime}" />
 			</div>
 		{/if}
-		<Button iconData="{faSyncAlt}" onClick="{resetTime}" />
+		<div class="{$isTimerDone ? 'green' : ''}">
+			<Button iconData="{faSyncAlt}" onClick="{resetTime}" />
+		</div>
 		{#if !$isTimerRunning && !$isTimerDone}
 			<div in:fade out:scale>
 				<Button iconData="{faPlus}" onClick="{addTime}" />
@@ -114,5 +116,8 @@
 	.button-holder {
 		display: flex;
 		justify-content: center;
+	}
+	.green {
+		color: var(--green-color);
 	}
 </style>

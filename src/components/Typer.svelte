@@ -1,7 +1,9 @@
 <script lang="ts">
 	import {
 		correctCharacters,
+		correctWords,
 		currentLocale,
+		incorrectCharacters,
 		incorrectWords,
 		isTimerDone,
 		isTimerRunning,
@@ -9,33 +11,12 @@
 	import { getShuffledWords } from "../helpers/wordProvider";
 	import LL from "../i18n/i18n-svelte";
 	import { fade } from "svelte/transition";
-	import type IncorrectWord from "../IncorrectWord";
-
-	// CPM: The amount of correct characters typed, divided by the test duration in minutes.
-	// WPM: Words per minute, CPM divided by 5.
 
 	const SUBMIT_CHARS = [" ", "Enter"];
 	let inputFocused = false; //hack for removing placeholder on focus
 
 	let words: string[] = getShuffledWords($currentLocale);
 	currentLocale.subscribe((newLocale) => (words = getShuffledWords(newLocale)));
-
-	const createIncorrectWord = (
-		expectedWord: string,
-		typedWord: string
-	): IncorrectWord => {
-		let incorrectChars = 0; // TODO do we need this?
-		const expectedChars = Array.from(expectedWord);
-		const typedChars = Array.from(typedWord);
-		expectedChars.forEach((expectedChar, index) => {
-			if (expectedChar === typedChars[index]) {
-				$correctCharacters = $correctCharacters + 1;
-			} else {
-				incorrectChars++;
-			}
-		});
-		return { expectedWord, typedWord, incorrectChars };
-	};
 
 	const handleKeypress = (event: KeyboardEvent): void => {
 		if (event.ctrlKey) return;
@@ -46,11 +27,18 @@
 			if (!inputValue) return;
 			(event.target as HTMLInputElement).value = "";
 			if (inputValue !== words[0]) {
-				$incorrectWords = [
-					...$incorrectWords,
-					createIncorrectWord(words[0], inputValue),
-				];
+				$incorrectWords = $incorrectWords + 1;
+				const expectedChars = Array.from(words[0]);
+				const typedChars = Array.from(inputValue);
+				expectedChars.forEach((expectedChar, index) => {
+					if (expectedChar === typedChars[index]) {
+						$correctCharacters = $correctCharacters + 1;
+					} else {
+						$incorrectCharacters = $incorrectCharacters + 1;
+					}
+				});
 			} else {
+				$correctWords = $correctWords + 1;
 				$correctCharacters = $correctCharacters + inputValue.length;
 			}
 			words = words.filter((_, index) => index !== 0);
