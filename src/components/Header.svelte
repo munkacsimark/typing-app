@@ -1,20 +1,16 @@
 <script lang="ts">
 	import { faCog } from "@fortawesome/free-solid-svg-icons";
 	import Button from "./button/Button.svelte";
-	import { openedModal } from "../stores";
-	import SettingsModal from "./modals/SettingsModal.svelte";
+	import { createEventDispatcher } from "svelte";
 
-	const handleOpenSettingsModal = (): void => {
-		$openedModal = {
-			translationFunctionName: "modalTitleSettings",
-			component: SettingsModal,
-		};
-	};
+	const dispatch = createEventDispatcher();
+
+	const handleClick = (): void => dispatch("settingsOpen");
 </script>
 
 <div class="header">
 	<h1>Typing app</h1>
-	<Button iconData="{faCog}" onClick="{handleOpenSettingsModal}" />
+	<Button iconData="{faCog}" onClick="{handleClick}" />
 </div>
 
 <style>

@@ -1,17 +1,20 @@
 import { Writable, writable } from "svelte/store";
-import { minuteInTimestamp } from "./helpers/timeCalculations";
-import type ModalContentInfo from "./ModalContentInfo";
+import type IncorrectWord from "./IncorrectWord";
 
-const openedModal: Writable<ModalContentInfo | null> = writable(null);
 const isDarkTheme: Writable<boolean> = writable(false);
-const remainingTime: Writable<number> = writable(minuteInTimestamp);
 const isTimerRunning: Writable<boolean> = writable(false);
 const isTimerDone: Writable<boolean> = writable(false);
+const baseTime: Writable<number> = writable(0);
+const remainingTime: Writable<number> = writable(0);
+const correctCharacters: Writable<number> = writable(0);
+const incorrectWords: Writable<IncorrectWord[]> = writable([]);
 
 export {
-	openedModal,
 	isDarkTheme,
-	remainingTime,
 	isTimerRunning,
 	isTimerDone,
+	baseTime,
+	remainingTime,
+	correctCharacters,
+	incorrectWords,
 };

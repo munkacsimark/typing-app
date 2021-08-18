@@ -13,6 +13,9 @@ const getTimeDataFromTimestamp = (timestamp: number): TimeData => {
 	return { seconds, minutes, hours };
 };
 
+const getTimeInMinutes = (timestamp: number): number =>
+	timestamp / minuteInTimestamp;
+
 const toDaytime = ({ hours, minutes, seconds }: TimeData): string =>
 	`PT${hours}H${minutes}M${seconds}S`;
 
@@ -56,6 +59,7 @@ export {
 	minuteInTimestamp,
 	hourInTimestamp,
 	getTimeDataFromTimestamp,
+	getTimeInMinutes,
 	toDaytime,
 	formatTimeData,
 	incrementTime,
