@@ -5,6 +5,9 @@ const hu: Translation = {
 	themeSelector: "Téma választó",
 	languageSelector: "Nyelv választó",
 	wordInputPlaceholder: "Itt kezdj el írni",
+	characterAccuracy: "Karakter pontosság",
+	wordAccuraccy: "Szó pontosság",
+	incorrectWords: "Hibás szavak",
 };
 
 export default hu;

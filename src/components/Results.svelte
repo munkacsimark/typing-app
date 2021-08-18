@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { getTimeInMinutes } from "../helpers/timeCalculations";
+	import LL from "../i18n/i18n-svelte";
 
 	import {
 		baseTime,
@@ -28,15 +29,15 @@
 		<span class="value">{Math.round(wpm) || 0}</span>
 	</div>
 	<div class="row">
-		<span class="name">Character accuracy:</span>
+		<span class="name">{$LL.characterAccuracy()}:</span>
 		<span class="value">{toFixedPercent(characterAccuracy || 0)}</span>
 	</div>
 	<div class="row">
-		<span class="name">Word accuracy:</span>
+		<span class="name">{$LL.wordAccuraccy()}:</span>
 		<span class="value">{toFixedPercent(wordAccuraccy || 0)}</span>
 	</div>
 	<div class="row">
-		<span class="name">Incorrect words:</span>
+		<span class="name">{$LL.incorrectWords()}:</span>
 		<span class="value">{$incorrectWords}</span>
 	</div>
 </div>

@@ -5,6 +5,9 @@ const en: BaseTranslation = {
 	themeSelector: "Theme selector",
 	languageSelector: "Language selector",
 	wordInputPlaceholder: "Start typing here",
+	characterAccuracy: "Character accuracy",
+	wordAccuraccy: "Word accuracy",
+	incorrectWords: "Incorrect words",
 };
 
 export default en;
