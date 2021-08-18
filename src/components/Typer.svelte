@@ -1,14 +1,41 @@
 <script lang="ts">
-	import { currentLocale, isTimerRunning } from "../stores";
+	import {
+		correctCharacters,
+		currentLocale,
+		incorrectWords,
+		isTimerDone,
+		isTimerRunning,
+	} from "../stores";
 	import { getShuffledWords } from "../helpers/wordProvider";
 	import LL from "../i18n/i18n-svelte";
 	import { fade } from "svelte/transition";
+	import type IncorrectWord from "../IncorrectWord";
+
+	// CPM: The amount of correct characters typed, divided by the test duration in minutes.
+	// WPM: Words per minute, CPM divided by 5.
 
 	const SUBMIT_CHARS = [" ", "Enter"];
 	let inputFocused = false; //hack for removing placeholder on focus
 
 	let words: string[] = getShuffledWords($currentLocale);
 	currentLocale.subscribe((newLocale) => (words = getShuffledWords(newLocale)));
+
+	const createIncorrectWord = (
+		expectedWord: string,
+		typedWord: string
+	): IncorrectWord => {
+		let incorrectChars = 0; // TODO do we need this?
+		const expectedChars = Array.from(expectedWord);
+		const typedChars = Array.from(typedWord);
+		expectedChars.forEach((expectedChar, index) => {
+			if (expectedChar === typedChars[index]) {
+				$correctCharacters = $correctCharacters + 1;
+			} else {
+				incorrectChars++;
+			}
+		});
+		return { expectedWord, typedWord, incorrectChars };
+	};
 
 	const handleKeypress = (event: KeyboardEvent): void => {
 		if (event.ctrlKey) return;
@@ -18,6 +45,14 @@
 			const inputValue: string = (event.target as HTMLInputElement).value;
 			if (!inputValue) return;
 			(event.target as HTMLInputElement).value = "";
+			if (inputValue !== words[0]) {
+				$incorrectWords = [
+					...$incorrectWords,
+					createIncorrectWord(words[0], inputValue),
+				];
+			} else {
+				$correctCharacters = $correctCharacters + inputValue.length;
+			}
 			words = words.filter((_, index) => index !== 0);
 		}
 	};
@@ -32,11 +67,14 @@
 	<input
 		type="text"
 		class="typer-input"
-		placeholder="{inputFocused ? '' : $LL.wordInputPlaceholder()}"
+		placeholder="{inputFocused || $isTimerDone
+			? ''
+			: $LL.wordInputPlaceholder()}"
 		spellcheck="false"
 		autocomplete="off"
 		autocapitalize="off"
 		tabindex="0"
+		disabled="{$isTimerDone}"
 		on:keypress="{handleKeypress}"
 		on:focus="{() => (inputFocused = true)}"
 		on:blur="{() => (inputFocused = false)}"

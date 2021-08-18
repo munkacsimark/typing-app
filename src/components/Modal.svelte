@@ -1,25 +1,31 @@
 <script lang="ts">
 	import { faTimes } from "@fortawesome/free-solid-svg-icons";
 	import Button from "./button/Button.svelte";
-	import { openedModal } from "../stores";
-	import LL from "../i18n/i18n-svelte";
 	import { scale, fade } from "svelte/transition";
+	import { createEventDispatcher } from "svelte";
 
-	const closeModal = (): void => ($openedModal = null);
+	const dispatch = createEventDispatcher();
+
+	export let isOpen: boolean = false;
+	export let title: string = "";
+
+	const closeModal = (): void => dispatch("close");
 </script>
 
-<div class="modal-holder">
-	<div class="fader" on:click="{closeModal}" transition:fade></div>
-	<div class="modal" transition:scale>
-		<header class="modal-header">
-			{$openedModal ? $LL[$openedModal.translationFunctionName]() : ""}
-			<Button iconData="{faTimes}" onClick="{closeModal}" />
-		</header>
-		<div class="modal-content">
-			<svelte:component this="{$openedModal?.component}" />
+{#if isOpen}
+	<div class="modal-holder">
+		<div class="fader" on:click="{closeModal}" transition:fade></div>
+		<div class="modal" transition:scale>
+			<header class="modal-header">
+				{title}
+				<Button iconData="{faTimes}" onClick="{closeModal}" />
+			</header>
+			<div class="modal-content">
+				<slot />
+			</div>
 		</div>
 	</div>
-</div>
+{/if}
 
 <style>
 	.modal-holder {

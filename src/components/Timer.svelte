@@ -17,63 +17,68 @@
 	import type TimeData from "../TimeData";
 	import Button from "./button/Button.svelte";
 	import {
+		baseTime,
 		currentLocale,
 		isTimerDone,
 		isTimerRunning,
 		remainingTime,
 	} from "../stores";
 	import { scale, fade } from "svelte/transition";
+	import { createEventDispatcher } from "svelte";
+
+	const dispatch = createEventDispatcher();
 
 	const MIN_TIME = 5 * secondInTimestamp;
 	const MAX_TIME = 24 * hourInTimestamp;
 
 	let timerInterval: number;
 
-	let timeData: TimeData;
-	$: timeData = getTimeDataFromTimestamp($remainingTime);
+	let timeDataToShow: TimeData;
+	$: timeDataToShow = getTimeDataFromTimestamp($remainingTime);
 
 	const isTimeValid = (timestamp: number): boolean =>
 		timestamp >= MIN_TIME && timestamp <= MAX_TIME;
 
 	const addTime = (): void => {
-		let newRemainingTime: number = incrementTime($remainingTime);
-		if (!isTimeValid(newRemainingTime)) return;
-		$remainingTime = newRemainingTime;
+		let newTime: number = incrementTime($baseTime);
+		if (!isTimeValid(newTime)) return;
+		$baseTime = newTime;
+		$remainingTime = newTime;
 	};
 
 	const subtractTime = (): void => {
-		let newRemainingTime: number = decrementTime($remainingTime);
-		if (!isTimeValid(newRemainingTime)) return;
-		$remainingTime = newRemainingTime;
+		let newTime: number = decrementTime($baseTime);
+		if (!isTimeValid(newTime)) return;
+		$baseTime = newTime;
+		$remainingTime = newTime;
 	};
 
 	const resetTime = (): void => {
-		$isTimerRunning = false;
+		clearInterval(timerInterval);
+		$baseTime = minuteInTimestamp;
 		$remainingTime = minuteInTimestamp;
+		$isTimerRunning = false;
 		$isTimerDone = false;
 	};
 
+	currentLocale.subscribe(resetTime);
 	isTimerRunning.subscribe((isRunning) => {
-		if (isRunning) {
-			timerInterval = window.setInterval(() => {
-				if ($remainingTime <= 0) {
-					$isTimerRunning = false;
-					$isTimerDone = true;
-					return;
-				}
-				$remainingTime = $remainingTime - secondInTimestamp;
-			}, 1000);
-		} else {
-			clearInterval(timerInterval);
-		}
+		if (!isRunning) return;
+		timerInterval = window.setInterval(() => {
+			if ($remainingTime <= 0) {
+				clearInterval(timerInterval);
+				$isTimerRunning = false;
+				$isTimerDone = true;
+				return;
+			}
+			$remainingTime = $remainingTime - secondInTimestamp;
+		}, 1000);
 	});
-
-	currentLocale.subscribe((_) => resetTime());
 </script>
 
 <div class="timer-holder">
-	<time datetime="{toDaytime(timeData)}" class="time">
-		{formatTimeData(timeData)}
+	<time datetime="{toDaytime(timeDataToShow)}" class="time">
+		{formatTimeData(timeDataToShow)}
 	</time>
 	<div class="button-holder">
 		{#if !$isTimerRunning && !$isTimerDone}
