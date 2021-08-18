@@ -26,6 +26,18 @@ export type Translation = {
 	 * Start typing here
 	 */
 	'wordInputPlaceholder': string
+	/**
+	 * Character accuracy
+	 */
+	'characterAccuracy': string
+	/**
+	 * Word accuracy
+	 */
+	'wordAccuraccy': string
+	/**
+	 * Incorrect words
+	 */
+	'incorrectWords': string
 }
 
 export type TranslationFunctions = {
@@ -45,6 +57,18 @@ export type TranslationFunctions = {
 	 * Start typing here
 	 */
 	'wordInputPlaceholder': () => LocalizedString
+	/**
+	 * Character accuracy
+	 */
+	'characterAccuracy': () => LocalizedString
+	/**
+	 * Word accuracy
+	 */
+	'wordAccuraccy': () => LocalizedString
+	/**
+	 * Incorrect words
+	 */
+	'incorrectWords': () => LocalizedString
 }
 
 export type Formatters = {}
