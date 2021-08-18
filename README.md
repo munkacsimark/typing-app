@@ -1,4 +1,4 @@
-# Typer app
+# Typing app
 
 This is just a pet-project to play with Svelte and Typescript, inspired by: https://typefast.io
 
