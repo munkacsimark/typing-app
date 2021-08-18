@@ -41,7 +41,9 @@
 				$correctWords = $correctWords + 1;
 				$correctCharacters = $correctCharacters + inputValue.length;
 			}
-			words = words.filter((_, index) => index !== 0);
+			const clonedWords = [...words];
+			clonedWords.push(clonedWords.shift());
+			words = clonedWords;
 		}
 	};
 </script>
@@ -76,6 +78,7 @@
 		align-items: center;
 		color: var(--base-font-color);
 		font-size: 48px;
+		overflow: hidden;
 	}
 	.word-list {
 		color: var(--base-font-color);
