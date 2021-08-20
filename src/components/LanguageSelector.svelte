@@ -1,7 +1,6 @@
 <script lang="ts">
-	import LL, { setLocale } from "../i18n/i18n-svelte";
+	import LL, { locale, setLocale } from "../i18n/i18n-svelte";
 	import type { Locales } from "../i18n/i18n-types";
-	import { currentLocale } from "../stores";
 
 	const handleLanguageChange = (event: Event) =>
 		setLocale((event.target as HTMLSelectElement).value as Locales);
@@ -11,7 +10,7 @@
 	{$LL.languageSelector()}
 	<select
 		on:change="{handleLanguageChange}"
-		value="{$currentLocale}"
+		value="{$locale}"
 		class="select"
 	>
 		<option value="en">English</option>

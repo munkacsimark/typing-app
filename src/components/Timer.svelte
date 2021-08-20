@@ -17,12 +17,12 @@
 	import type TimeData from "../TimeData";
 	import Button from "./button/Button.svelte";
 	import {
-		currentLocale,
 		isTimerDone,
 		isTimerRunning,
 		remainingTime,
 	} from "../stores";
 	import { scale, fade } from "svelte/transition";
+	import { locale } from '../i18n/i18n-svelte';
 
 	const MIN_TIME = 5 * secondInTimestamp;
 	const MAX_TIME = 24 * hourInTimestamp;
@@ -68,7 +68,7 @@
 		}
 	});
 
-	currentLocale.subscribe((_) => resetTime());
+	locale.subscribe((_) => resetTime());
 </script>
 
 <div class="timer-holder">
