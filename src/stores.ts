@@ -8,6 +8,7 @@ const correctCharacters: Writable<number> = writable(0);
 const incorrectCharacters: Writable<number> = writable(0);
 const correctWords: Writable<number> = writable(0);
 const incorrectWords: Writable<number> = writable(0);
+const wordInputValue: Writable<string> = writable("");
 
 export {
 	isDarkTheme,
@@ -19,4 +20,5 @@ export {
 	incorrectCharacters,
 	correctWords,
 	incorrectWords,
+	wordInputValue,
 };

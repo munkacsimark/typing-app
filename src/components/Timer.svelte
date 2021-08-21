@@ -18,9 +18,14 @@
 	import Button from "./button/Button.svelte";
 	import {
 		baseTime,
+		correctCharacters,
+		correctWords,
+		incorrectCharacters,
+		incorrectWords,
 		isTimerDone,
 		isTimerRunning,
 		remainingTime,
+		wordInputValue,
 	} from "../stores";
 	import { scale, fade } from "svelte/transition";
 	import { locale } from "../i18n/i18n-svelte";
@@ -56,6 +61,11 @@
 		$remainingTime = minuteInTimestamp;
 		$isTimerRunning = false;
 		$isTimerDone = false;
+		$wordInputValue = "";
+		$correctCharacters = 0;
+		$correctWords = 0;
+		$incorrectCharacters = 0;
+		$incorrectWords = 0;
 	};
 
 	locale.subscribe(resetTime);

@@ -9,8 +9,6 @@
 		isDarkTheme,
 		isTimerRunning,
 		remainingTime,
-		correctCharacters,
-		incorrectWords,
 		isTimerDone,
 	} from "./stores";
 	import Timer from "./components/Timer.svelte";
@@ -65,8 +63,6 @@
 	isTimerRunning.subscribe((isRunning) => {
 		if (!isRunning) return;
 		$remainingTime = $baseTime;
-		$correctCharacters = 0;
-		$incorrectWords = 0;
 	});
 
 	// handle showing results
