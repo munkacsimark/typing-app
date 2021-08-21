@@ -20,7 +20,6 @@
 		baseTime,
 		correctCharacters,
 		correctWords,
-		currentLocale,
 		incorrectCharacters,
 		incorrectWords,
 		isTimerDone,
@@ -29,6 +28,7 @@
 		wordInputValue,
 	} from "../stores";
 	import { scale, fade } from "svelte/transition";
+	import { locale } from "../i18n/i18n-svelte";
 
 	const MIN_TIME = 5 * secondInTimestamp;
 	const MAX_TIME = 24 * hourInTimestamp;
@@ -68,7 +68,7 @@
 		$incorrectWords = 0;
 	};
 
-	currentLocale.subscribe(resetTime);
+	locale.subscribe(resetTime);
 	isTimerRunning.subscribe((isRunning) => {
 		if (!isRunning) return;
 		timerInterval = window.setInterval(() => {

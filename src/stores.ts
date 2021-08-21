@@ -1,7 +1,4 @@
 import { Writable, writable } from "svelte/store";
-import type { Locales } from "./i18n/i18n-types";
-
-const currentLocale: Writable<Locales> = writable("en"); // workaround because $locale isn't working
 const isDarkTheme: Writable<boolean> = writable(false);
 const isTimerRunning: Writable<boolean> = writable(false);
 const isTimerDone: Writable<boolean> = writable(false);
@@ -14,7 +11,6 @@ const incorrectWords: Writable<number> = writable(0);
 const wordInputValue: Writable<string> = writable("");
 
 export {
-	currentLocale,
 	isDarkTheme,
 	isTimerRunning,
 	isTimerDone,

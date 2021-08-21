@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LL, { initI18n, locale, setLocale } from "./i18n/i18n-svelte";
+	import LL, { initI18n } from "./i18n/i18n-svelte";
 	import Theme from "./Theme";
 	import { setTheme, saveTheme, getTheme } from "./helpers/themeHandler";
 	import Header from "./components/Header.svelte";
@@ -7,7 +7,6 @@
 	import {
 		baseTime,
 		isDarkTheme,
-		currentLocale,
 		isTimerRunning,
 		remainingTime,
 		isTimerDone,
@@ -18,9 +17,6 @@
 	import Results from "./components/Results.svelte";
 
 	initI18n("en");
-	locale.subscribe((newLocale) => {
-		$currentLocale = newLocale; // workaround because $locale isn't working
-	});
 
 	// initial setting of theme
 	const DARK_SCHEME_MEDIA_MATCH_STRING = "(prefers-color-scheme: dark)";

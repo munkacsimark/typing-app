@@ -2,7 +2,6 @@
 	import {
 		correctCharacters,
 		correctWords,
-		currentLocale,
 		incorrectCharacters,
 		incorrectWords,
 		isTimerDone,
@@ -10,14 +9,14 @@
 		wordInputValue,
 	} from "../stores";
 	import { getShuffledWords } from "../helpers/wordProvider";
-	import LL from "../i18n/i18n-svelte";
+	import LL, { locale } from "../i18n/i18n-svelte";
 	import { fade } from "svelte/transition";
 
 	const SUBMIT_CHARS = [" ", "Enter"];
 	let inputFocused = false; //hack for removing placeholder on focus
 
-	let words: string[] = getShuffledWords($currentLocale);
-	currentLocale.subscribe((newLocale) => (words = getShuffledWords(newLocale)));
+	let words: string[];
+	$: words = getShuffledWords($locale);
 
 	const handleKeypress = (event: KeyboardEvent): void => {
 		if (event.ctrlKey) return;
