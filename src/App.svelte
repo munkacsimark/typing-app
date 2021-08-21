@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LL, { initI18n, locale } from "./i18n/i18n-svelte";
+	import LL, { initI18n, locale, setLocale } from "./i18n/i18n-svelte";
 	import Theme from "./Theme";
 	import { setTheme, saveTheme, getTheme } from "./helpers/themeHandler";
 	import Header from "./components/Header.svelte";
@@ -10,8 +10,6 @@
 		currentLocale,
 		isTimerRunning,
 		remainingTime,
-		correctCharacters,
-		incorrectWords,
 		isTimerDone,
 	} from "./stores";
 	import Timer from "./components/Timer.svelte";
@@ -69,8 +67,6 @@
 	isTimerRunning.subscribe((isRunning) => {
 		if (!isRunning) return;
 		$remainingTime = $baseTime;
-		$correctCharacters = 0;
-		$incorrectWords = 0;
 	});
 
 	// handle showing results

@@ -7,6 +7,7 @@
 		incorrectWords,
 		isTimerDone,
 		isTimerRunning,
+		wordInputValue,
 	} from "../stores";
 	import { getShuffledWords } from "../helpers/wordProvider";
 	import LL from "../i18n/i18n-svelte";
@@ -23,13 +24,11 @@
 		if (!$isTimerRunning) $isTimerRunning = true;
 		if (SUBMIT_CHARS.includes(event.key)) {
 			event.preventDefault();
-			const inputValue: string = (event.target as HTMLInputElement).value;
-			if (!inputValue) return;
-			(event.target as HTMLInputElement).value = "";
-			if (inputValue !== words[0]) {
+			if (!$wordInputValue) return;
+			if ($wordInputValue !== words[0]) {
 				$incorrectWords = $incorrectWords + 1;
 				const expectedChars = Array.from(words[0]);
-				const typedChars = Array.from(inputValue);
+				const typedChars = Array.from($wordInputValue);
 				expectedChars.forEach((expectedChar, index) => {
 					if (expectedChar === typedChars[index]) {
 						$correctCharacters = $correctCharacters + 1;
@@ -39,8 +38,9 @@
 				});
 			} else {
 				$correctWords = $correctWords + 1;
-				$correctCharacters = $correctCharacters + inputValue.length;
+				$correctCharacters = $correctCharacters + $wordInputValue.length;
 			}
+			$wordInputValue = "";
 			const clonedWords = [...words];
 			clonedWords.push(clonedWords.shift());
 			words = clonedWords;
@@ -65,6 +65,7 @@
 		autocapitalize="off"
 		tabindex="0"
 		disabled="{$isTimerDone}"
+		bind:value="{$wordInputValue}"
 		on:keypress="{handleKeypress}"
 		on:focus="{() => (inputFocused = true)}"
 		on:blur="{() => (inputFocused = false)}"

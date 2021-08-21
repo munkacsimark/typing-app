@@ -18,15 +18,17 @@
 	import Button from "./button/Button.svelte";
 	import {
 		baseTime,
+		correctCharacters,
+		correctWords,
 		currentLocale,
+		incorrectCharacters,
+		incorrectWords,
 		isTimerDone,
 		isTimerRunning,
 		remainingTime,
+		wordInputValue,
 	} from "../stores";
 	import { scale, fade } from "svelte/transition";
-	import { createEventDispatcher } from "svelte";
-
-	const dispatch = createEventDispatcher();
 
 	const MIN_TIME = 5 * secondInTimestamp;
 	const MAX_TIME = 24 * hourInTimestamp;
@@ -59,6 +61,11 @@
 		$remainingTime = minuteInTimestamp;
 		$isTimerRunning = false;
 		$isTimerDone = false;
+		$wordInputValue = "";
+		$correctCharacters = 0;
+		$correctWords = 0;
+		$incorrectCharacters = 0;
+		$incorrectWords = 0;
 	};
 
 	currentLocale.subscribe(resetTime);
