@@ -64,10 +64,6 @@
 		if (!isRunning) return;
 		$remainingTime = $baseTime;
 	});
-
-	// handle showing results
-	let showResults: boolean = false;
-	isTimerDone.subscribe((isDone) => (showResults = isDone));
 </script>
 
 <main>
